@@ -1,0 +1,32 @@
+{
+  "name": "my-webpack",
+  "version": "1.0.0",
+  "description": "Test",
+  "main": "index.js",
+  "dependencies": {
+    "jquery": "^2.2.0",
+    "rx": "^4.0.8"
+  },
+  "devDependencies": {
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.3",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "webpack": "^1.12.13",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --inline"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://rattham-dotography@github.com/rattham-dotography/my-webpack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rattham-dotography/my-webpack/issues"
+  },
+  "homepage": "https://github.com/rattham-dotography/my-webpack#readme"
+}
