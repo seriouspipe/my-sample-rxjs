@@ -1,4 +1,5 @@
 import Rx from 'rx'
+import { assign, map, merge, filter } from 'lodash'
 
 let subject = null
 
@@ -39,3 +40,50 @@ class ClickCount {
 }
 
 export default ClickCount
+
+export class NotificationService {
+
+  constructor() {
+    this.newNotifications = null
+    this.notifications = null
+    this.updates = null
+  }
+
+  init() {
+
+    this.updates = new Rx.Subject()
+    this.newNotifications = new Rx.Subject()
+    this.create = new Rx.Subject()
+    this.remove = new Rx.Subject()
+
+    this.notification = this.updates
+      .scan((messages, operation) => operation(messages), {})
+      .asObservable()
+
+    this.create
+      .timestamp()
+      .map( (message) => (messages) => {
+        return merge({}, messages, { [message.timestamp] : assign({}, message.value, { timestamp: message.timestamp }) })
+      })
+      .subscribe(this.updates)
+
+    this.newNotifications
+      .subscribe(this.create)
+
+    this.remove
+      .map( (id) => (messages) => {
+        return filter(messages, (m, i) => i !== id)
+      })
+      .subscribe(this.updates)
+
+  }
+
+  addNotification(message) {
+    this.newNotifications.onNext(message)
+  }
+
+  removeNotification(id) {
+    this.remove.onNext(id)
+  }
+
+}
